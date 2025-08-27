@@ -1,0 +1,1 @@
+npm error enoent Could not read package.json: Error: ENOENT: no such file or directory, open '/opt/build/repo/package.json'
