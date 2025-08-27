@@ -1,0 +1,2331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StemCorp - Automatizamos tu presencia, medimos tu impacto</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #059669;
+            --accent: #f59e0b;
+            --dark: #1f2937;
+            --darker: #111827;
+            --light: #f3f4f6;
+            --lighter: #f9fafb;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --dark: #f3f4f6;
+            --darker: #f9fafb;
+            --light: #1f2937;
+            --lighter: #111827;
+            --white: #1a1a1a;
+            --gray: #9ca3af;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--white);
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            padding: 5rem 0;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* Navbar mejorada */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            background-color: var(--white);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .navbar {
+            background-color: rgba(26, 26, 26, 0.95);
+        }
+
+        .dark-mode .navbar.scrolled {
+            background-color: var(--white);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-left: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-left: 2rem;
+            position: relative;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .theme-toggle, .menu-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--primary);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .back-button i {
+            margin-right: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .back-button:hover {
+            color: var(--primary-dark);
+        }
+
+        .back-button:hover i {
+            transform: translateX(-5px);
+        }
+
+        /* Hero section mejorada */
+        .hero {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.9) 0%, rgba(5, 150, 105, 0.8) 100%), url('https://images.unsplash.com/photo-1533750349088-cd871a92f312?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 10rem 0 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--white);
+            color: var(--primary);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--white);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .btn-info {
+            background-color: var(--accent);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-info:hover {
+            background-color: #e6900b;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Cards mejoradas */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.1);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-content {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .card-text {
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+            flex-grow: 1;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .card-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .card-link i {
+            margin-left: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .card-link:hover {
+            color: var(--primary-dark);
+        }
+
+        .card-link:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Horizontal scroll section */
+        .scroll-section {
+            padding: 2rem 0;
+            background-color: var(--lighter);
+        }
+
+        .scroll-container {
+            overflow-x: auto;
+            padding: 2rem 0;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge */
+        }
+
+        .scroll-content {
+            display: flex;
+            gap: 2rem;
+            width: max-content;
+        }
+
+        .scroll-item {
+            flex: 0 0 350px;
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Stats section */
+        .stats {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            padding: 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-text {
+            font-size: 1.2rem;
+        }
+
+        /* Example Section */
+        .example {
+            background: linear-gradient(135deg, var(--secondary) 0%, #047857 100%);
+            color: var(--white);
+        }
+
+        .example-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .example-content {
+            padding-right: 2rem;
+        }
+
+        .example-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .example-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Process Section */
+        .process {
+            background-color: var(--white);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            line-height: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background-color: var(--lighter);
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border: 2px solid var(--primary);
+        }
+
+        .pricing-card.featured::before {
+            content: 'MÁS POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .pricing-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--lighter);
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        /* FAQ Section */
+        .faq {
+            background-color: var(--white);
+        }
+
+        .accordion {
+            margin-top: 3rem;
+        }
+
+        .accordion-item {
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .accordion-header {
+            background: var(--lighter);
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .accordion-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .accordion-content.active {
+            padding: 1.5rem;
+            max-height: 300px;
+        }
+
+        /* Form section */
+        .form-section {
+            background-color: var(--lighter);
+            padding: 5rem 0;
+        }
+
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .form-content {
+            padding-right: 2rem;
+        }
+
+        .form-title {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-text {
+            margin-bottom: 2rem;
+            color: var(--gray);
+        }
+
+        .contact-info {
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+
+        .form {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .form-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 2rem 0;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            padding: 2.5rem;
+            position: relative;
+            margin: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--dark);
+        }
+
+        .modal-title {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .modal-text {
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--darker);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            margin-bottom: 2rem;
+            color: var(--gray);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link-item {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-link {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .footer-link:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--gray);
+        }
+
+        /* Chatbot */
+        .chatbot-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .chatbot-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            border: none;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+
+        .chatbot-button i {
+            font-size: 1.5rem;
+        }
+
+        .chatbot-window {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: translateY(10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .chatbot-window.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .chatbot-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chatbot-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.8rem 1rem;
+            border-radius: 15px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .message.bot {
+            background: var(--lighter);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .message.user {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chatbot-input {
+            display: flex;
+            padding: 0.8rem;
+            border-top: 1px solid var(--lighter);
+            background: var(--white);
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid var(--lighter);
+            border-radius: 25px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .chatbot-input input:focus {
+            border-color: var(--primary);
+        }
+
+        .chatbot-send {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .chatbot-send:hover {
+            background: var(--primary-dark);
+        }
+
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .quick-reply {
+            background: var(--lighter);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            border-radius: 15px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .quick-reply:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .form-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-content {
+                padding-right: 0;
+            }
+            
+            .example-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .example-content {
+                padding-right: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--white);
+                flex-direction: column;
+                padding: 5rem 2rem;
+                transition: var(--transition);
+                box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .nav-item {
+                margin: 1.5rem 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .theme-toggle {
+                margin-left: 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2.3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .card-buttons {
+                flex-direction: column;
+            }
+            
+            .chatbot-window {
+                width: 300px;
+                height: 400px;
+                right: 10px;
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .btn-secondary {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+            
+            .chatbot-window {
+                width: calc(100% - 40px);
+                right: 20px;
+                left: 20px;
+            }
+            
+            .hero {
+                padding: 5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <span class="logo-text">StemCorp</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item"><a class="nav-link" data-section="inicio">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" data-section="servicios">Servicios</a></li>
+                <li class="nav-item"><a class="nav-link" data-section="web-staticas">Web Estáticas</a></li>
+                <li class="nav-item"><a class="nav-link" data-section="modelo">Modelo</a></li>
+                <li class="nav-item"><a class="nav-link" data-section="casos">Casos de Éxito</a></li>
+                <li class="nav-item"><a class="nav-link" data-section="planes">Planes</a></li>
+                <li class="nav-item"><a class="nav-link" data-section="contacto">Contacto</a></li>
+            </ul>
+            
+            <div style="display: flex; align-items: center;">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Secciones -->
+    <main>
+        <!-- Sección Inicio -->
+        <section id="inicio" class="section active">
+            <div class="hero">
+                <div class="container hero-content">
+                    <h1 class="hero-title">Automatizamos tu presencia, medimos tu impacto</h1>
+                    <p class="hero-subtitle">En StemCorp, transformamos la digitalización en una ventaja competitiva. Creamos soluciones inteligentes para que tu mensaje llegue más lejos y tus resultados sean siempre claros.</p>
+                    <div class="hero-buttons">
+                        <a class="btn btn-primary" data-section="servicios">Descubre nuestros servicios</a>
+                        <a class="btn btn-secondary" data-section="contacto">Contacta con nosotros</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <h2 class="section-title">Nuestra Visión: Tu Socio Estratégico en la Era Digital</h2>
+                <p class="section-subtitle" style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">En StemCorp, nos dedicamos a ser el compañero de viaje ideal para empresas, ONGs y emprendedores que buscan no solo estar presentes en el mundo digital, sino también optimizar cada paso de su recorrido.</p>
+                
+                <div class="cards-container">
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <h3 class="card-title">Misión Clara</h3>
+                            <p class="card-text">Ayudamos a potenciar la visibilidad y optimizar procesos de marketing, comunicación y gestión de datos.</p>
+                            <a data-section="servicios" class="card-link">Descubre cómo <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                            <h3 class="card-title">Tecnología Avanzada</h3>
+                            <p class="card-text">Utilizamos automatización y tecnología open source para soluciones inteligentes.</p>
+                            <a data-section="servicios" class="card-link">Explora nuestra tecnología <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <h3 class="card-title">Visión de Futuro</h3>
+                            <p class="card-text">Ser tu socio estratégico en digitalización y analítica para proyectos con impacto social y comercial.</p>
+                            <a data-section="contacto" class="card-link">Únete a nosotros <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Servicios -->
+        <section id="servicios" class="section">
+            <div class="container">
+                <button class="back-button" data-section="inicio">
+                    <i class="fas fa-arrow-left"></i> Volver al inicio
+                </button>
+                <h2 class="section-title">Nuestros Servicios Integrales</h2>
+                <p class="section-subtitle" style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">Ofrecemos un abanico de soluciones diseñadas para simplificar tu trabajo y maximizar tu impacto digital.</p>
+                
+                <div class="cards-container">
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <i class="fas fa-share-alt"></i>
+                            </div>
+                            <h3 class="card-title">Marketing Multicanal Automatizado</h3>
+                            <p class="card-text">Centraliza y automatiza tus publicaciones en Facebook, Instagram, LinkedIn y X (Twitter). Adaptamos tu mensaje a cada plataforma.</p>
+                            <div class="card-buttons">
+                                <a class="btn btn-primary" data-section="contacto">Solicitar servicio</a>
+                                <button class="btn btn-info more-info-btn" data-service="marketing">Más información</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3 class="card-title">Reportes Automáticos de Impacto</h3>
+                            <p class="card-text">Olvídate de la recopilación manual. Recopilamos métricas y generamos informes PDF claros que se envían directamente a tu correo.</p>
+                            <div class="card-buttons">
+                                <a class="btn btn-primary" data-section="contacto">Solicitar servicio</a>
+                                <button class="btn btn-info more-info-btn" data-service="reportes">Más información</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h3 class="card-title">Preservación y Gestión de Contenido</h3>
+                            <p class="card-text">Asegura la longevidad de tu información digital. Realizamos copias seguras de sitios web y documentos.</p>
+                            <div class="card-buttons">
+                                <a class="btn btn-primary" data-section="contacto">Solicitar servicio</a>
+                                <button class="btn btn-info more-info-btn" data-service="preservacion">Más información</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h3 class="card-title">Integraciones y Automatización</h3>
+                            <p class="card-text">Conectamos tus herramientas esenciales, desde formularios y CRMs hasta sistemas de gestión.</p>
+                            <div class="card-buttons">
+                                <a class="btn btn-primary" data-section="contacto">Solicitar servicio</a>
+                                <button class="btn btn-info more-info-btn" data-service="integraciones">Más información</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <h3 class="card-title">Páginas Web Estáticas</h3>
+                            <p class="card-text">Diseños profesionales, rápidos y seguros para impulsar tu presencia digital sin complicaciones.</p>
+                            <div class="card-buttons">
+                                <a class="btn btn-primary" data-section="web-staticas">Ver detalles</a>
+                                <button class="btn btn-info more-info-btn" data-service="web-staticas">Más información</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Web Estáticas -->
+        <section id="web-staticas" class="section">
+            <div class="container">
+                <button class="back-button" data-section="servicios">
+                    <i class="fas fa-arrow-left"></i> Volver a servicios
+                </button>
+                <h2 class="section-title">Páginas Web Estáticas para PYMEs</h2>
+                <p class="section-subtitle" style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">Diseños profesionales, rápidos y seguros para impulsar tu presencia digital sin complicaciones</p>
+                
+                <div class="cards-container">
+                    <div class="card fade-in">
+                        <div class="card-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Diseño Web Profesional</h3>
+                            <p class="card-text">Creamos sitios web atractivos y funcionales que reflejan la esencia de tu marca y conectan con tu audiencia.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in">
+                        <div class="card-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Diseño Responsive</h3>
+                            <p class="card-text">Tu web se verá perfecta en cualquier dispositivo: móvil, tablet o desktop.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in">
+                        <div class="card-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Alta Velocidad</h3>
+                            <p class="card-text">Páginas estáticas ultra rápidas que mejoran la experiencia de usuario y el SEO.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in">
+                        <div class="card-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Máxima Seguridad</h3>
+                            <p class="card-text">Al no usar bases de datos ni CMS, tu sitio es inmune a los hackeos más comunes.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in">
+                        <div class="card-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Bajo Mantenimiento</h3>
+                            <p class="card-text">Sin actualizaciones constantes ni vulnerabilidades. Tu sitio siempre funcionará.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">SEO Optimizado</h3>
+                            <p class="card-text">Estructura optimizada para motores de búsqueda para que tus clientes te encuentren fácilmente.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejemplo: Firma de Abogados -->
+                <div class="example" style="margin-top: 5rem; border-radius: 15px; overflow: hidden;">
+                    <div class="container example-container">
+                        <div class="example-content">
+                            <h2 class="section-title" style="color: white;">Ejemplo: Firma de Abogados</h2>
+                            <p>Para un bufete de abogados, creamos una página web estática que incluye:</p>
+                            <ul style="margin: 1.5rem 0; padding-left: 1.5rem;">
+                                <li>Diseño profesional y serio que inspira confianza</li>
+                                <li>Información clara sobre áreas de práctica</li>
+                                <li>Perfiles de abogados con experiencia y especialidades</li>
+                                <li>Formulario de contacto seguro y fácil de usar</li>
+                                <li>Blog integrado con artículos legales (usando Static CMS)</li>
+                                <li>Optimización para búsquedas locales</li>
+                                <li>Certificado SSL incluido</li>
+                                <li>Alojamiento rápido y seguro</li>
+                            </ul>
+                            <p>Todo esto con un mantenimiento mínimo y máxima seguridad para proteger la confidencialidad de la información.</p>
+                        </div>
+                        <div class="example-image">
+                            <img src="https://images.unsplash.com/photo-1589391886645-d51941baf7fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Ejemplo web firma de abogados">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proceso -->
+                <div style="margin-top: 5rem;">
+                    <h2 class="section-title">Nuestro Proceso</h2>
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <h3>Consulta</h3>
+                            <p>Analizamos tus necesidades y objetivos para crear la mejor solución.</p>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <h3>Diseño</h3>
+                            <p>Creamos un diseño personalizado que refleje la identidad de tu empresa.</p>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <h3>Desarrollo</h3>
+                            <p>Convertimos el diseño en una web estática optimizada y responsive.</p>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <h3>Lanzamiento</h3>
+                            <p>Publicamos tu web y la optimizamos para los motores de búsqueda.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Precios -->
+                <div style="margin-top: 5rem;">
+                    <h2 class="section-title">Nuestros Planes de Web Estáticas</h2>
+                    <div class="pricing-cards">
+                        <div class="pricing-card">
+                            <h3>Básico</h3>
+                            <div class="price">$599 <span>único</span></div>
+                            <ul class="pricing-features">
+                                <li>1 página principal</li>
+                                <li>3 páginas internas</li>
+                                <li>Diseño responsive</li>
+                                <li>Formulario de contacto</li>
+                                <li>Optimización SEO básica</li>
+                                <li>Entrega en 7 días</li>
+                            </ul>
+                            <a href="#contacto" class="btn btn-primary">Contratar</a>
+                        </div>
+                        
+                        <div class="pricing-card featured">
+                            <h3>Profesional</h3>
+                            <div class="price">$999 <span>único</span></div>
+                            <ul class="pricing-features">
+                                <li>5 páginas principales</li>
+                                <li>8 páginas internas</li>
+                                <li>Diseño responsive premium</li>
+                                <li>Formularios personalizados</li>
+                                <li>SEO avanzado</li>
+                                <li>Integración con redes sociales</li>
+                                <li>Entrega en 10 días</li>
+                            </ul>
+                            <a href="#contacto" class="btn btn-primary">Contratar</a>
+                        </div>
+                        
+                        <div class="pricing-card">
+                            <h3>Empresarial</h3>
+                            <div class="price">$1499 <span>único</span></div>
+                            <ul class="pricing-features">
+                                <li>Páginas ilimitadas</li>
+                                <li>Diseño totalmente personalizado</li>
+                                <li>Blog integrado (Static CMS)</li>
+                                <li>Formularios avanzados</li>
+                                <li>SEO completo y analytics</li>
+                                <li>Integraciones personalizadas</li>
+                                <li>Entrega en 15 días</li>
+                            </ul>
+                            <a href="#contacto" class="btn btn-primary">Contratar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resto de las secciones (Modelo, Casos de Éxito, Planes, Contacto) -->
+        <!-- Se mantienen igual que en el código anterior, por brevedad no se repiten aquí -->
+        <!-- Sección Modelo -->
+        <section id="modelo" class="section">
+            <div class="container">
+                <button class="back-button" data-section="inicio">
+                    <i class="fas fa-arrow-left"></i> Volver al inicio
+                </button>
+                <h2 class="section-title">El Modelo Marketing + Analítica</h2>
+                <p class="section-subtitle" style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">Nuestro enfoque distintivo combina la potencia del marketing estratégico con la precisión de la analítica de datos.</p>
+                
+                <div class="scroll-section">
+                    <div class="scroll-container">
+                        <div class="scroll-content">
+                            <div class="scroll-item">
+                                <h3>1. Estrategia de Contenido</h3>
+                                <p>Desarrollamos mensajes que resuenan con tu audiencia, adaptados a cada canal. Realizamos investigación de mercado para identificar los temas y formatos que mejor conectan con tu público objetivo.</p>
+                            </div>
+                            <div class="scroll-item">
+                                <h3>2. Automatización Inteligente</h3>
+                                <p>Implementamos herramientas para gestionar tus campañas y procesos de forma eficiente. Configuramos flujos de trabajo que ahorran tiempo y reducen errores en la ejecución de tus estrategias.</p>
+                            </div>
+                            <div class="scroll-item">
+                                <h3>3. Medición Rigurosa</h3>
+                                <p>Recopilamos y analizamos métricas clave para entender el rendimiento de cada acción. Utilizamos dashboards personalizados que te permiten visualizar el impacto de tus campañas en tiempo real.</p>
+                            </div>
+                            <div class="scroll-item">
+                                <h3>4. Optimización Continua</h3>
+                                <p>Basados en los datos, ajustamos y mejoramos estrategias para resultados superiores. Implementamos ciclos de mejora continua que maximizan el retorno de tu inversión en marketing digital.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="text-align: center; margin-top: 2rem; font-style: italic;">Este ciclo de creación, automatización, medición y optimización garantiza que tu inversión digital se traduzca en crecimiento real y sostenible.</p>
+            </div>
+        </section>
+
+        <!-- Sección Casos de Éxito -->
+        <section id="casos" class="section">
+            <div class="container">
+                <button class="back-button" data-section="inicio">
+                    <i class="fas fa-arrow-left"></i> Volver al inicio
+                </button>
+                <h2 class="section-title">Casos de Éxito</h2>
+                
+                <div class="cards-container">
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <h3 class="card-title">Proyecto "Abrazo Escolar"</h3>
+                            <p class="card-text">Implementamos nuestras soluciones para la Asociación Civil Abrazo Escolar en San Pedro de Jujuy, centrada en el apoyo educativo y comunitario.</p>
+                            <a class="btn btn-primary" data-section="abrazo-escolar">Ver caso completo</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <h3 class="card-title">Tienda Online "Moda Sostenible"</h3>
+                            <p class="card-text">Automatización de marketing y reportes para una tienda online de moda sostenible, incrementando sus ventas en un 180% en 6 meses.</p>
+                            <button class="btn btn-info">Próximamente</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <h3 class="card-title">ONG "Agua Limpia"</h3>
+                            <p class="card-text">Sistema de preservación de contenido y reportes automáticos para donantes, mejorando la transparencia y captación de fondos.</p>
+                            <button class="btn btn-info">Próximamente</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Abrazo Escolar (subsección de Casos de Éxito) -->
+        <section id="abrazo-escolar" class="section">
+            <div class="container">
+                <button class="back-button" data-section="casos">
+                    <i class="fas fa-arrow-left"></i> Volver a casos de éxito
+                </button>
+                <h2 class="section-title">Caso de Éxito: Proyecto "Abrazo Escolar"</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem;">
+                    <div>
+                        <h3 style="margin-bottom: 1rem;">El Reto</h3>
+                        <p style="margin-bottom: 2rem;">Abrazo Escolar se enfrentaba al desafío de comunicar eficazmente sus logros y el valor de su trabajo para atraer más apoyo y medir su alcance real en la comunidad. Necesitaban una plataforma robusta que les permitiera gestionar y difundir su contenido institucional de forma eficiente.</p>
+                        
+                        <h3 style="margin-bottom: 1rem;">Solución Implementada</h3>
+                        <ul style="list-style-type: none;">
+                            <li style="margin-bottom: 0.8rem;"><i class="fas fa-check-circle" style="color: var(--secondary); margin-right: 0.5rem;"></i> Digitalización completa de contenido institucional</li>
+                            <li style="margin-bottom: 0.8rem;"><i class="fas fa-check-circle" style="color: var(--secondary); margin-right: 0.5rem;"></i> Publicación programada en múltiples plataformas</li>
+                            <li style="margin-bottom: 0.8rem;"><i class="fas fa-check-circle" style="color: var(--secondary); margin-right: 0.5rem;"></i> Métricas semanales con reportes automáticos</li>
+                            <li style="margin-bottom: 0.8rem;"><i class="fas fa-check-circle" style="color: var(--secondary); margin-right: 0.5rem;"></i> Archivo seguro del material institucional</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <div class="stats">
+                            <div class="stats-container">
+                                <div class="stat-item">
+                                    <div class="stat-number" data-count="250">0</div>
+                                    <div class="stat-text">Incremento de alcance</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number" data-count="10">0</div>
+                                    <div class="stat-text">Aliados estratégicos</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number" data-count="100">0</div>
+                                    <div class="stat-text">Documentación lista</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: var(--lighter); padding: 2rem; border-radius: 15px; margin-top: 2rem;">
+                            <h3 style="margin-bottom: 1rem;">Resultados Obtenidos</h3>
+                            <p>Gracias a la implementación de nuestras soluciones, Abrazo Escolar experimentó una transformación significativa en su presencia y capacidad para medir su impacto, logrando mayor visibilidad para su causa, fortaleciendo la confianza y colaboración con aliados estratégicos, y asegurando transparencia y acceso a financiación.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Planes -->
+        <section id="planes" class="section">
+            <div class="container">
+                <button class="back-button" data-section="inicio">
+                    <i class="fas fa-arrow-left"></i> Volver al inicio
+                </button>
+                <h2 class="section-title">Nuestros Planes de Servicios</h2>
+                <p class="section-subtitle" style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">Hemos diseñado planes flexibles que te permiten escalar tus capacidades digitales a tu propio ritmo.</p>
+                
+                <div class="cards-container">
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <h3 class="card-title">Plan Básico</h3>
+                            <p class="card-text" style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">$199<span style="font-size: 1rem; color: var(--gray);">/mes</span></p>
+                            <ul style="list-style-type: none; margin: 1.5rem 0;">
+                                <li style="margin-bottom: 0.8rem;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 0.5rem;"></i> Publicación Multicanal Automatizada</li>
+                                <li style="margin-bottom: 0.8rem;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 0.5rem;"></i> Reporte Mensual de Impacto</li>
+                                <li style="margin-bottom: 0.8rem;"><i class="fas fa-times" style="color: #ef4444; margin-right: 0.5rem;"></i> Servicio de Preservación de Contenido</li>
+                                <li style="margin-bottom: 0.8rem;"><i class="fas fa-times" style="color: #ef4444; margin-right: 0.5rem;"></i> Integraciones Personalizadas</li>
+                            </ul>
+                            <a class="btn btn-primary" data-section="contacto" style="width: 100%; text-align: center;">Contratar ahora</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in" style="border: 2px solid var(--primary); transform: scale(1.05);">
+                        <div class="card-content">
+                            <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 0.5rem 1.5rem; border-radius: 25px; font-weight: 600;">Popular</div>
+                            <h3 class="card-title">Plan Pro</h3>
+                            <p class="card-text" style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">$399<span style="font-size: 1rem; color: var(--gray);">/mes</span></p>
+                            <ul style="list-style-type: none; margin: 1.5rem 0;">
+                                <li style="margin-bottom: 0.8rem;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 0.5rem;"></i> Publicación Multicanal Automatizada</li>
+                                <li style="margin-bottom: 0.8rem;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 0.5rem;"></i> Reporte Semanal de Impacto</li>
+                                <li style="margin-bottom: 0.8rem;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 0.5rem;"></i> Servicio de Preservación de Contenido</li>
+                                <li style="margin-bottom: 0.8rem;"><i class="fas fa-times" style="color: #ef4444; margin-right: 0.5rem;"></i> Integraciones Personalizadas</li>
+                            </ul>
+                            <a class="btn btn-primary" data-section="contacto" style="width: 100%; text-align: center; background: var(--primary);">Contratar ahora</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in">
+                        <div class="card-content">
+                            <h3 class="card-title">Plan Premium</h3>
+                            <p class="card-text" style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">$699<span style="font-size: 1rem; color: var(--gray);">/mes</span></p>
+                            <ul style="list-style-type: none; margin: 1.5rem 0;">
+                                <li style="margin-bottom: 0.8rem;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 0.5rem;"></i> Publicación Multicanal Automatizada</li>
+                                <li style="margin-bottom: 0.8rem;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 0.5rem;"></i> Reporte Semanal de Impacto</li>
+                                <li style="margin-bottom: 0.8rem;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 0.5rem;"></i> Servicio de Preservación de Contenido</li>
+                                <li style="margin-bottom: 0.8rem;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 0.5rem;"></i> Integraciones Personalizadas</li>
+                            </ul>
+                            <a class="btn btn-primary" data-section="contacto" style="width: 100%; text-align: center;">Contratar ahora</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Contacto -->
+        <section id="contacto" class="section">
+            <div class="container">
+                <button class="back-button" data-section="inicio">
+                    <i class="fas fa-arrow-left"></i> Volver al inicio
+                </button>
+                <h2 class="section-title">¿Listo para Transformar tu Presencia Digital?</h2>
+                
+                <div class="form-container">
+                    <div class="form-content">
+                        <h3 class="form-title">Hablemos de tu proyecto</h3>
+                        <p class="form-text">En StemCorp, estamos listos para ayudarte a automatizar tu presencia, medir tu impacto y llevar tu proyecto al siguiente nivel. Completa el formulario y nos pondremos en contacto contigo en menos de 24 horas.</p>
+                        
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h4>Teléfono / WhatsApp</h4>
+                                    <p>3888-408369</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4>Email</h4>
+                                    <p>fert.arsi@gmail.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4>Horario de atención</h4>
+                                    <p>Lunes a Viernes de 8:00 a 12:00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Nombre</label>
+                                <input type="text" id="name" class="form-input" placeholder="Tu nombre completo" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" id="email" class="form-input" placeholder="tu@email.com" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Teléfono (opcional)</label>
+                                <input type="tel" id="phone" class="form-input" placeholder="+54 9 XXX XXX XXXX">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="service" class="form-label">Servicio de interés</label>
+                                <select id="service" class="form-input">
+                                    <option value="">Selecciona un servicio</option>
+                                    <option value="marketing">Marketing Multicanal Automatizado</option>
+                                    <option value="reportes">Reportes Automáticos de Impacto</option>
+                                    <option value="preservacion">Preservación y Gestión de Contenido</option>
+                                    <option value="integraciones">Integraciones y Automatización</option>
+                                    <option value="web-staticas">Páginas Web Estáticas</option>
+                                    <option value="plan">Consulta sobre planes</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message" class="form-label">Mensaje</label>
+                                <textarea id="message" class="form-textarea" placeholder="Cuéntanos sobre tu proyecto y cómo podemos ayudarte" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="form-btn">Enviar mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container">
+        <button class="chatbot-button" id="chatbotToggle">
+            <i class="fas fa-comment"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-title">
+                    <i class="fas fa-robot"></i>
+                    <span>Asistente Virtual StemCorp</span>
+                </div>
+                <button class="chatbot-close" id="chatbotClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot">
+                    ¡Hola! 👋 Soy el asistente virtual de StemCorp. ¿En qué puedo ayudarte hoy?
+                    <div class="quick-replies" id="quickReplies">
+                        <div class="quick-reply" data-reply="servicios">Conocer servicios</div>
+                        <div class="quick-reply" data-reply="precios">Ver planes y precios</div>
+                        <div class="quick-reply" data-reply="web-staticas">Webs estáticas</div>
+                        <div class="quick-reply" data-reply="contacto">Contactar con un humano</div>
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Escribe tu mensaje...">
+                <button class="chatbot-send" id="chatbotSend">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modales para más información -->
+    <div id="modal-marketing" class="modal">
+        <div class="modal-content">
+            <button class="modal-close"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title">Marketing Multicanal Automatizado</h2>
+            <p class="modal-text">Nuestro servicio de Marketing Multicanal Automatizado te permite gestionar todas tus redes sociales desde una única plataforma, ahorrando tiempo y asegurando una presencia constante en todos los canales.</p>
+            
+            <h3>¿Qué incluye?</h3>
+            <ul>
+                <li>Programación automática de publicaciones en Facebook, Instagram, LinkedIn y Twitter</li>
+                <li>Adaptación de mensajes para cada plataforma</li>
+                <li>Plantillas personalizadas para mantener la coherencia de marca</li>
+                <li>Calendario editorial visual para planificar campañas</li>
+                <li>Gestión de múltiples perfiles desde un solo dashboard</li>
+            </ul>
+            
+            <h3>Beneficios</h3>
+            <ul>
+                <li>Ahorra hasta 10 horas semanales en gestión de redes sociales</li>
+                <li>Incrementa el engagement con publicaciones optimizadas para cada plataforma</li>
+                <li>Mantén una presencia constante incluso fuera de horario laboral</li>
+                <li>Coordina campañas multicanal con un solo clic</li>
+            </ul>
+            
+            <div style="margin-top: 2rem;">
+                <a class="btn btn-primary" data-section="contacto">Solicitar este servicio</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-reportes" class="modal">
+        <div class="modal-content">
+            <button class="modal-close"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title">Reportes Automáticos de Impacto</h2>
+            <p class="modal-text">Automatizamos la recopilación y análisis de datos para que puedas focus en lo importante: tomar decisiones basadas en resultados reales.</p>
+            
+            <h3>¿Qué incluye?</h3>
+            <ul>
+                <li>Integración con Google Analytics, redes sociales y bases de datos internas</li>
+                <li>Reportes personalizados en formato PDF o dashboards interactivos</li>
+                <li>Envío automático por email en la frecuencia que necesites (diaria, semanal, mensual)</li>
+                <li>Almacenamiento seguro en la nube de todos tus reportes históricos</li>
+                <li>Métricas personalizadas según tus objetivos específicos</li>
+            </ul>
+            
+            <h3>Beneficios</h3>
+            <ul>
+                <li>Elimina el trabajo manual de recopilación de datos</li>
+                <li>Accede a información actualizada en todo momento</li>
+                <li>Comparte resultados con stakeholders de forma profesional</li>
+                <li>Identifica tendencias y oportunidades con visualizaciones claras</li>
+            </ul>
+            
+            <div style="margin-top: 2rem;">
+                <a class="btn btn-primary" data-section="contacto">Solicitar este servicio</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-preservacion" class="modal">
+        <div class="modal-content">
+            <button class="modal-close"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title">Preservación y Gestión de Contenido</h2>
+            <p class="modal-text">Protege tu patrimonio digital con nuestro servicio de preservación y gestión de contenido, asegurando que tu información esté siempre disponible y segura.</p>
+            
+            <h3>¿Qué incluye?</h3>
+            <ul>
+                <li>Copias de seguridad automáticas de sitios web y documentos importantes</li>
+                <li>Conversión de contenido a formatos estables y de largo plazo</li>
+                <li>Almacenamiento en la nube con redundancia y cifrado</li>
+                <li>Sistema de versionado para tracking de cambios</li>
+                <li>Archivo histórico para auditorías y consultas futuras</li>
+            </ul>
+            
+            <h3>Beneficios</h3>
+            <ul>
+                <li>Protección contra pérdida de información crítica</li>
+                <li>Cumplimiento de requisitos legales y de transparencia</li>
+                <li>Acceso rápido a documentación histórica</li>
+                <li>Independencia de plataformas específicas</li>
+            </ul>
+            
+            <div style="margin-top: 2rem;">
+                <a class="btn btn-primary" data-section="contacto">Solicitar este servicio</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-integraciones" class="modal">
+        <div class="modal-content">
+            <button class="modal-close"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title">Integraciones y Automatización</h2>
+            <p class="modal-text">Conectamos todas tus herramientas y automatizamos flujos de trabajo para que tus procesos sean más eficientes y reduzcan la posibilidad de error humano.</p>
+            
+            <h3>¿Qué incluye?</h3>
+            <ul>
+                <li>Conexiones entre CRMs, herramientas de marketing, formularios y bases de datos</li>
+                <li>Automatización de tareas repetitivas con n8n</li>
+                <li>Diseño de flujos personalizados para ventas, educación y marketing</li>
+                <li>Sincronización de datos entre sistemas</li>
+                <li>Notificaciones automáticas para eventos importantes</li>
+            </ul>
+            
+            <h3>Beneficios</h3>
+            <ul>
+                <li>Reduce hasta un 80% el tiempo dedicado a tareas manuales</li>
+                <li>Minimiza errores en procesos críticos</li>
+                <li>Mejora la consistencia de los datos entre sistemas</li>
+                <li>Permite escalar operaciones sin aumentar proporcionalmente la carga de trabajo</li>
+            </ul>
+            
+            <div style="margin-top: 2rem;">
+                <a class="btn btn-primary" data-section="contacto">Solicitar este servicio</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-web-staticas" class="modal">
+        <div class="modal-content">
+            <button class="modal-close"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title">Páginas Web Estáticas para PYMEs</h2>
+            <p class="modal-text">Ofrecemos un servicio especializado en crear páginas web estáticas rápidas, seguras y efectivas para pequeñas y medianas empresas.</p>
+            
+            <h3>¿Qué incluye?</h3>
+            <ul>
+                <li>Diseño web profesional y personalizado</li>
+                <li>Desarrollo responsive (adaptable a móviles)</li>
+                <li>Optimización de velocidad y SEO</li>
+                <li>Formularios de contacto integrados</li>
+                <li>Certificado SSL de seguridad</li>
+                <li>Alojamiento de alto rendimiento</li>
+                <li>Capacitación para actualizaciones básicas</li>
+                <li>Soporte técnico post-implementación</li>
+            </ul>
+            
+            <h3>Beneficios</h3>
+            <ul>
+                <li>Mayor velocidad de carga que las webs dinámicas</li>
+                <li>Máxima seguridad al no utilizar bases de datos</li>
+                <li>Bajo costo de mantenimiento</li>
+                <li>Mejor posicionamiento en buscadores</li>
+                <li>Perfecto para sitios corporativos, portfolios y landing pages</li>
+            </ul>
+            
+            <div style="margin-top: 2rem;">
+                <a class="btn btn-primary" data-section="web-staticas">Ver detalles completos</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div>
+                <div class="footer-logo">StemCorp</div>
+                <p class="footer-text">Automatizamos tu presencia, medimos tu impacto. Transformamos la digitalización en una ventaja competitiva para tu organización.</p>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="footer-heading">Enlaces rápidos</h3>
+                <ul class="footer-links">
+                    <li class="footer-link-item"><a class="footer-link" data-section="inicio">Inicio</a></li>
+                    <li class="footer-link-item"><a class="footer-link" data-section="servicios">Servicios</a></li>
+                    <li class="footer-link-item"><a class="footer-link" data-section="web-staticas">Web Estáticas</a></li>
+                    <li class="footer-link-item"><a class="footer-link" data-section="modelo">Modelo</a></li>
+                    <li class="footer-link-item"><a class="footer-link" data-section="casos">Casos de Éxito</a></li>
+                    <li class="footer-link-item"><a class="footer-link" data-section="planes">Planes</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="footer-heading">Servicios</h3>
+                <ul class="footer-links">
+                    <li class="footer-link-item"><a class="footer-link" data-section="servicios">Marketing Multicanal</a></li>
+                    <li class="footer-link-item"><a class="footer-link" data-section="servicios">Reportes Automáticos</a></li>
+                    <li class="footer-link-item"><a class="footer-link" data-section="servicios">Gestión de Contenido</a></li>
+                    <li class="footer-link-item"><a class="footer-link" data-section="servicios">Automatización</a></li>
+                    <li class="footer-link-item"><a class="footer-link" data-section="web-staticas">Webs Estáticas</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="footer-heading">Contacto</h3>
+                <ul class="footer-links">
+                    <li class="footer-link-item"><i class="fas fa-phone" style="margin-right: 0.5rem;"></i> 3888-408369</li>
+                    <li class="footer-link-item"><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i> fert.arsi@gmail.com</li>
+                    <li class="footer-link-item"><i class="fas fa-clock" style="margin-right: 0.5rem;"></i> Lun-Vie: 8:00 - 12:00</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2023 StemCorp. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navegación entre secciones
+        document.querySelectorAll('.nav-link, .btn[data-section], .footer-link[data-section]').forEach(element => {
+            element.addEventListener('click', () => {
+                const sectionId = element.getAttribute('data-section');
+                showSection(sectionId);
+                
+                // Cerrar menú móvil si está abierto
+                navMenu.classList.remove('active');
+            });
+        });
+
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Cargar tema guardado
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        // Navbar scroll effect
+        const navbar = document.querySelector('.navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Aquí normalmente enviarías los datos del formulario a un servidor
+            alert('¡Gracias por tu mensaje! Nos pondremos en contacto contigo en menos de 24 horas.');
+            contactForm.reset();
+        });
+
+        // Animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const appearOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -100px 0px"
+        };
+        
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('visible');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+        
+        fadeElements.forEach(element => {
+            appearOnScroll.observe(element);
+        });
+
+        // Animated counters
+        const counters = document.querySelectorAll('.stat-number');
+        const speed = 200;
+        
+        const startCounter = () => {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-count');
+                const count = +counter.innerText;
+                const increment = Math.ceil(target / speed);
+                
+                if (count < target) {
+                    counter.innerText = count + increment;
+                    setTimeout(() => startCounter(), 1);
+                } else {
+                    counter.innerText = target + (counter.getAttribute('data-count').endsWith('00') ? '%' : '');
+                }
+            });
+        };
+        
+        // Start counters when stats section is in view
+        const statsSection = document.querySelector('.stats');
+        
+        if (statsSection) {
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        startCounter();
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            statsObserver.observe(statsSection);
+        }
+
+        // Modal functionality
+        const moreInfoButtons = document.querySelectorAll('.more-info-btn');
+        const modals = document.querySelectorAll('.modal');
+        const closeButtons = document.querySelectorAll('.modal-close');
+        
+        moreInfoButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const service = button.getAttribute('data-service');
+                const modal = document.getElementById(`modal-${service}`);
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const modal = button.closest('.modal');
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Cerrar modal al hacer clic fuera del contenido
+        modals.forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Chatbot functionality
+        const chatbotToggle = document.getElementById('chatbotToggle');
+        const chatbotWindow = document.getElementById('chatbotWindow');
+        const chatbotClose = document.getElementById('chatbotClose');
+        const chatbotMessages = document.getElementById('chatbotMessages');
+        const chatbotInput = document.getElementById('chatbotInput');
+        const chatbotSend = document.getElementById('chatbotSend');
+        const quickReplies = document.getElementById('quickReplies');
+
+        chatbotToggle.addEventListener('click', () => {
+            chatbotWindow.classList.toggle('active');
+        });
+
+        chatbotClose.addEventListener('click', () => {
+            chatbotWindow.classList.remove('active');
+        });
+
+        // Función para agregar mensajes al chat
+        function addMessage(text, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(isUser ? 'user' : 'bot');
+            messageDiv.textContent = text;
+            chatbotMessages.appendChild(messageDiv);
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+
+        // Función para procesar las respuestas del chatbot
+        function processMessage(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Respuestas predefinidas
+            if (lowerMessage.includes('hola') || lowerMessage.includes('buenas')) {
+                addMessage('¡Hola! 😊 ¿En qué puedo ayudarte hoy?');
+                showQuickReplies(['Servicios', 'Planes', 'Webs estáticas', 'Contacto']);
+            } 
+            else if (lowerMessage.includes('servicio') || lowerMessage.includes('qué hacen')) {
+                addMessage('En StemCorp ofrecemos los siguientes servicios:');
+                addMessage('📱 Marketing Multicanal Automatizado: Gestionamos tus redes sociales de forma automatizada');
+                addMessage('📊 Reportes Automáticos: Generamos informes de impacto con tus métricas clave');
+                addMessage('💾 Preservación de Contenido: Guardamos y protegemos tu información digital');
+                addMessage('⚙️ Integraciones: Conectamos tus herramientas y automatizamos procesos');
+                addMessage('🌐 Páginas Web Estáticas: Diseños rápidos y seguros para PYMEs');
+                addMessage('¿Te interesa alguno en particular?');
+            }
+            else if (lowerMessage.includes('web estática') || lowerMessage.includes('página web') || lowerMessage.includes('webestática')) {
+                addMessage('Nuestro servicio de Páginas Web Estáticas incluye:');
+                addMessage('✅ Diseño profesional y responsive');
+                addMessage('✅ Máxima velocidad y seguridad');
+                addMessage('✅ Optimización SEO');
+                addMessage('✅ Formularios de contacto');
+                addMessage('✅ Certificado SSL incluido');
+                addMessage('✅ Bajo mantenimiento');
+                addMessage('Tenemos planes desde $599 (único pago). ¿Quieres que te cuente más?');
+            }
+            else if (lowerMessage.includes('precio') || lowerMessage.includes('cuánto') || lowerMessage.includes('plan')) {
+                addMessage('Tenemos diferentes planes adaptados a tus necesidades:');
+                addMessage('💡 Básico ($199/mes): Publicación multicanal + Reporte mensual');
+                addMessage('🚀 Pro ($399/mes): Todo el básico + Reporte semanal + Preservación');
+                addMessage('🎯 Premium ($699/mes): Todos los servicios + Integraciones personalizadas');
+                addMessage('🌐 Webs Estáticas: Desde $599 (único pago)');
+                addMessage('¿Quieres que te ayude a elegir el plan adecuado?');
+            }
+            else if (lowerMessage.includes('contact') || lowerMessage.includes('humano') || lowerMessage.includes('persona')) {
+                addMessage('¡Claro! Puedes contactarnos por:');
+                addMessage('📞 Teléfono/WhatsApp: 3888-408369');
+                addMessage('✉️ Email: fert.arsi@gmail.com');
+                addMessage('⏰ Horario: Lunes a Viernes de 8:00 a 12:00');
+                addMessage('¿Te gustaría que te lleve al formulario de contacto?');
+            }
+            else if (lowerMessage.includes('gracias') || lowerMessage.includes('ty')) {
+                addMessage('¡De nada! 😊 Estoy aquí para ayudarte cuando lo necesites.');
+            }
+            else {
+                addMessage('Lo siento, no entendí completamente tu pregunta. ¿Podrías reformularla?');
+                addMessage('Puedo ayudarte con información sobre nuestros servicios, planes de precios, o ponerte en contacto con nuestro equipo.');
+            }
+        }
+
+        // Función para mostrar botones de respuesta rápida
+        function showQuickReplies(replies) {
+            quickReplies.innerHTML = '';
+            replies.forEach(reply => {
+                const button = document.createElement('div');
+                button.classList.add('quick-reply');
+                button.textContent = reply;
+                button.addEventListener('click', () => {
+                    addMessage(reply, true);
+                    processMessage(reply.toLowerCase());
+                });
+                quickReplies.appendChild(button);
+            });
+        }
+
+        // Enviar mensaje al hacer clic en el botón
+        chatbotSend.addEventListener('click', () => {
+            const message = chatbotInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                chatbotInput.value = '';
+                setTimeout(() => {
+                    processMessage(message);
+                }, 1000);
+            }
+        });
+
+        // Enviar mensaje al presionar Enter
+        chatbotInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                chatbotSend.click();
+            }
+        });
+
+        // Respuestas rápidas iniciales
+        document.querySelectorAll('.quick-reply').forEach(reply => {
+            reply.addEventListener('click', () => {
+                const replyText = reply.getAttribute('data-reply');
+                addMessage(replyText, true);
+                processMessage(replyText);
+            });
+        });
+
+        // Acordeón FAQ
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                content.classList.toggle('active');
+                
+                const icon = header.querySelector('i');
+                if (content.classList.contains('active')) {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                } else {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
